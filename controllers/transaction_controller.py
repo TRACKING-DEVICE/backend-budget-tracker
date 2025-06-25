@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 def create_transaction():
     data = request.get_json()
     amount = data.get('amount')
-    t_type = data.get('type')  # "income" or "expense"
+    t_type = data.get('type')  
     category = data.get('category')
     description = data.get('description', '')
     date = data.get('date')

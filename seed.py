@@ -1,22 +1,33 @@
 from app import app, db
-from models import User, Transaction
+from models import User, Transaction, Category
 from werkzeug.security import generate_password_hash
 
-# Sample seed data
 def seed_data():
     with app.app_context():
-        print("Clearing existing data...")
-        Transaction.query.delete()
-        User.query.delete()
+        print("🔄 Resetting database...")
+        db.drop_all()
+        db.create_all()
 
-        print("Seeding users...")
-        user1 = User(username="alice", password=generate_password_hash("password123"))
-        user2 = User(username="bob", password=generate_password_hash("secure456"))
+        print("👤 Seeding users...")
+        user1 = User(username='jesse', password=generate_password_hash('password123'))
+        user2 = User(username='tjay', password=generate_password_hash('password321'))
+        user3 = User(username='alice', password=generate_password_hash('password123'))
+        user4 = User(username='bob', password=generate_password_hash('secure456'))
 
-        db.session.add_all([user1, user2])
+        db.session.add_all([user1, user2, user3, user4])
         db.session.commit()
 
-        print("Seeding transactions...")
+        print("📦 Seeding categories...")
+        food = Category(name='Food')
+        rent = Category(name='Rent')
+        salary = Category(name='Salary')
+        freelance = Category(name='Freelance')
+        transport = Category(name='Transport')
+
+        db.session.add_all([food, rent, salary, freelance, transport])
+        db.session.commit()
+
+        print("💰 Seeding transactions...")
         tx1 = Transaction(
             amount=1200.00,
             category="Salary",
@@ -53,7 +64,6 @@ def seed_data():
         db.session.commit()
 
         print("✅ Done seeding the database!")
-
 
 if __name__ == "__main__":
     seed_data()
