@@ -3,7 +3,7 @@ from config import Config
 from models import db
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from seed import auth_bp, transaction_bp
+from routes import auth_bp, transaction_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
