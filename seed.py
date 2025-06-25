@@ -21,8 +21,8 @@ with app.app_context():
     db.session.commit()
 
     food = Category(name='Food')
-    rent = Category('Rent')
-    salary = Category('Salary')
+    rent = Category(name='Rent')
+    salary = Category(name='Salary')
     db.session.add_all([food, rent, salary])
     db.session.commit()
 

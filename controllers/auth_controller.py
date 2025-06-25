@@ -25,6 +25,6 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and user.check_password(password):
-        token = create_access_token(identity=user.id):
+        token = create_access_token(identity=user.id)
         return jsonify ({'access_token': token})
     return jsonify({'message': 'invalid details'}), 401    
