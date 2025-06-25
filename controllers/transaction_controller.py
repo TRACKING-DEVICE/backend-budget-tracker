@@ -72,3 +72,14 @@ def delete_transaction(id):
     db.session.delete(transaction)
     db.session.commit()
     return jsonify({"message": "Transaction deleted"}), 200
+
+def get_summary():
+    user_id = get_jwt_identity()
+    transactions = Transaction.query.filter_by(user_id=user_id).all()
+
+    summary = {}
+    for t in transactions:
+        category = t.category.name
+        summary[category] = summary.get(category, 0) + t.amount
+
+    return jsonify(summary)
