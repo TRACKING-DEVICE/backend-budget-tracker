@@ -1,24 +1,21 @@
-from models import db, User, Category, Transaction
-from app import app
+from app import app, db
+from models import User, Transaction, Category
+from werkzeug.security import generate_password_hash
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
+def seed_data():
+    with app.app_context():
+        print("🔄 Resetting database...")
+        db.drop_all()
+        db.create_all()
 
-    user1 = User(username='jesse')
-    user1.set_password('password123')
+        print("👤 Seeding users...")
+        user1 = User(username='jesse', password=generate_password_hash('password123'))
+        user2 = User(username='tjay', password=generate_password_hash('password321'))
+        user3 = User(username='alice', password=generate_password_hash('password123'))
+        user4 = User(username='bob', password=generate_password_hash('secure456'))
 
-    user2 = User(username='tjay')
-    user2.set_password('password321')
-
-    user3 = User(username='mark')
-    user3.set_password('password456')
-
-    user4 = User(username='daniel')
-    user4.set_password('password654')
-
-    db.session.add_all([user1, user2])
-    db.session.commit()
+        db.session.add_all([user1, user2, user3, user4])
+        db.session.commit()
 
     food = Category(name='Food')
     rent = Category(name='Rent')
@@ -26,11 +23,43 @@ with app.app_context():
     db.session.add_all([food, rent, salary])
     db.session.commit()
 
-    t1 = Transaction(amount=50, description='Groceries', category_id=food.id, user_id=user1.id)
-    t2 = Transaction(amount=100, description='Monthly Rent', category_id=rent.id, user_id=user1.id)
-    t3 = Transaction(amount=200, description='Monthly Salary', category_id=salary.id, user_id=user1.id)
+        print("💰 Seeding transactions...")
+        tx1 = Transaction(
+            amount=1200.00,
+            category="Salary",
+            type="income",
+            description="Monthly salary",
+            user_id=user1.id
+        )
 
-    db.session.add_all([t1, t2, t3])
-    db.session.commit()
+        tx2 = Transaction(
+            amount=50.00,
+            category="Food",
+            type="expense",
+            description="Lunch at cafe",
+            user_id=user1.id
+        )
 
-    print("The Database has been carefully seeded!")
+        tx3 = Transaction(
+            amount=500.00,
+            category="Freelance",
+            type="income",
+            description="Website project",
+            user_id=user2.id
+        )
+
+        tx4 = Transaction(
+            amount=150.00,
+            category="Transport",
+            type="expense",
+            description="Fuel refill",
+            user_id=user2.id
+        )
+
+        db.session.add_all([tx1, tx2, tx3, tx4])
+        db.session.commit()
+
+        print("✅ Done seeding the database!")
+
+if __name__ == "__main__":
+    seed_data()
