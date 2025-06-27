@@ -12,6 +12,6 @@ class Transaction(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id')) 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    # category = db.relationship('Categogy', backref='transactions')
+    category = db.relationship('Categogy', backref='transactions')
     user = db.relationship('User', backref='transactions')
 

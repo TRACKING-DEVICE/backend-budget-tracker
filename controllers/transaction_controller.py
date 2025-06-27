@@ -79,7 +79,7 @@ def get_summary():
 
     summary = {}
     for t in transactions:
-        category = t.category.name
+        category = t.category
         summary[category] = summary.get(category, 0) + t.amount
 
     return jsonify(summary)
