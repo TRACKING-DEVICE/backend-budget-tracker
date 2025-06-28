@@ -7,6 +7,9 @@ def register():
     username = data.get('username')
     password = data.get('password')
 
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+
     if User.query.filter_by(username=username).first():
         return jsonify({'message':'User already exists'}), 400
 
@@ -15,7 +18,7 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({'message':'User already exists'})
+    return jsonify({'message':'User registered successfully'}), 201
 
 def login():
     data = request.get_json()
