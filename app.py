@@ -10,7 +10,7 @@ app.config.from_object(Config)
 
 @app.route('/')
 def home():
-    return ( "Welcome to the Budget Tracker API!")
+    return ( {"message":"Welcome to the Budget Tracker API!"})
 
 db.init_app(app)
 migrate = Migrate(app, db)
