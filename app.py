@@ -10,7 +10,7 @@ app.config.from_object(Config)
 
 @app.route('/')
 def home():
-    return 'Backend Budget Tracker API is running!'
+    return jsonify({"message": "Welcome to the Budget Tracker API!"})
 
 db.init_app(app)
 migrate = Migrate(app, db)
