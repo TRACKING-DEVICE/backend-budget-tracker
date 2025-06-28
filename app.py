@@ -12,8 +12,12 @@ db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
-app.register_blueprint(auth_bp)
+app.register_blueprint(auth_bp,  url_prefix='/auth')
 app.register_blueprint(transaction_bp)
 
+@app.route('/')
+def home():
+    return {"message": "Welcome to the Budget Tracker API!"}
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

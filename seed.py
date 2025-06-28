@@ -9,10 +9,18 @@ def seed_data():
         db.create_all()
 
         print("👤 Seeding users...")
-        user1 = User(username='jesse', password_hash=generate_password_hash('password123'))
-        user2 = User(username='tjay', password_hash=generate_password_hash('password321'))
-        user3 = User(username='alice', password_hash=generate_password_hash('password123'))
-        user4 = User(username='bob', password_hash=generate_password_hash('secure456'))
+        user1 = User(username='jesse')
+        user1.set_password('password123')
+
+        user2 = User(username='tjay')
+        user2.set_password('password321')
+
+        user3 = User(username='alice')
+        user3.set_password('password123')
+
+        user4 = User(username='bob')
+        user4.set_password('secure456')
+
 
         db.session.add_all([user1, user2, user3, user4])
         db.session.commit()
